@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton, ListItem} from "@mui/material";
+import {Button, Checkbox, IconButton, ListItem, Typography} from "@mui/material";
 import {CheckBox, Delete} from "@mui/icons-material";
 
 
@@ -53,10 +53,10 @@ export function Todolist(props: PropsType) {
         props.addTask(title, props.id)
     }
     return <div>
-        <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
+        <Typography fontWeight={"bolder"} fontStyle={"normal"} fontSize={"larger"} color={"secondary"} align={"center"}><EditableSpan  title={props.title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist} aria-label={'delete'} size={"small"}><Delete
                 fontSize={"inherit"}/></IconButton>
-        </h3>
+        </Typography>
         <AddItemForm addItem={addTask}/>
         <ul>
             {
@@ -72,7 +72,7 @@ export function Todolist(props: PropsType) {
 
                         props.changeTaskTitle(t.id, newValue, props.id)
                     }
-                    return <ListItem style={{padding:'0px ',margin:'-20px -20px 0px -30px'}} key={t.id} className={t.isDone ? 'is-done' : ''}>
+                    return <ListItem style={{padding:'0px ',margin:'-20px -20px -20px -30px'}} key={t.id} className={t.isDone ? 'is-done' : ''}>
 
                         <Checkbox checked={t.isDone}
                                   onChange={onChangeStatusHandler}
