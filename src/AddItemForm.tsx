@@ -36,7 +36,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
             onKeyPress={onKeyPressHandler}
             className={error ? 'error' : ''}
             error={!!error}
-            helperText={error}/>
+            helperText={error}
+        size={"small"}
+        />
 
         <IconButton onClick={addTask}  color={"inherit"} size={"small"}>
             <ControlPoint color={"secondary"}/></IconButton>
