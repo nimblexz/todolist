@@ -52,6 +52,7 @@ test('correct todolist should change its name', () => {
     expect(startStatee.length).toBe(2)
 
     expect(endState[1].title).toBe(newTodolistTitle)
+    expect(startStatee[1].title).toBe('What to buy')
 
 
 })
@@ -69,6 +70,7 @@ test('correct filter of todolist should be changed', () => {
 
     expect(endState[1].filter).toBe(newFilter)
     expect(endState[0].filter).toBe("all")
+    expect(startState[1].filter).toBe("all")
 
 
 })
