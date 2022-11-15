@@ -3,7 +3,7 @@ import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton, ListItem, Typography} from "@mui/material";
-import {CheckBox, Delete} from "@mui/icons-material";
+import {Delete} from "@mui/icons-material";
 
 
 export type TaskType = {
@@ -28,19 +28,13 @@ type PropsType = {
 
 export function Todolist(props: PropsType) {
     const onAllClickHandler = () => {
-        {
             props.changeFilter("all", props.id)
-        }
     }
     const onActiveClickHandler = () => {
-        {
             props.changeFilter("active", props.id)
-        }
     }
     const onCompletedClickHandler = () => {
-        {
             props.changeFilter("completed", props.id)
-        }
     }
 
     const removeTodolist = () => {
