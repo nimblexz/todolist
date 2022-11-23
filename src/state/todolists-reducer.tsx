@@ -4,10 +4,12 @@ import {v1} from "uuid";
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
     id: string
+
 }
 export type ADDTodolistActionType = {
     type: 'ADD-TODOLIST'
     title: string
+    id:string
 }
 export type ChangeTodolistTitleActionType = {
     type: 'CHANGE-TITLE-TODOLIST'
@@ -30,7 +32,7 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
             return state.filter(tl => tl.id !== action.id)
         case 'ADD-TODOLIST':
             const todolist: TodolistType = {
-                id: v1(),
+                id: action.id,
                 filter: "all",
                 title: action.title
             }
@@ -47,15 +49,15 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
             throw new Error('I don`t understand')
     }
 }
-export const RemoveTodolistAC = (todolistID: string): RemoveTodolistActionType => {
+export const removeTodolistAC = (todolistID: string): RemoveTodolistActionType => {
     return {type: 'REMOVE-TODOLIST', id: todolistID}
 }
-export const ADDTodolistAC = (newTodolistTitle: string): ADDTodolistActionType => {
-    return {type: 'ADD-TODOLIST', title: newTodolistTitle}
+export const addTodolistAC = (newTodolistTitle: string): ADDTodolistActionType => {
+    return {type: 'ADD-TODOLIST', title: newTodolistTitle,id:v1()}
 }
-export const ChangeTodolistTitleAC = (todolistId2: string, newTodolistTitle: string): ChangeTodolistTitleActionType => {
+export const changeTodolistTitleAC = (todolistId2: string, newTodolistTitle: string): ChangeTodolistTitleActionType => {
     return {type: "CHANGE-TITLE-TODOLIST", id: todolistId2, title: newTodolistTitle}
 }
-export const ChangeTodolistFilterAC = (todolistId2: string, newFilter: FilterValuesType): ChangeTodolistFilterActionType => {
+export const changeTodolistFilterAC = (todolistId2: string, newFilter: FilterValuesType): ChangeTodolistFilterActionType => {
     return {type: "CHANGE-FILTER-TODOLIST", id: todolistId2, filter: newFilter}
 }
