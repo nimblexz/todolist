@@ -9,7 +9,7 @@ export type RemoveTodolistActionType = {
 export type ADDTodolistActionType = {
     type: 'ADD-TODOLIST'
     title: string
-    id:string
+    id: string
 }
 export type ChangeTodolistTitleActionType = {
     type: 'CHANGE-TITLE-TODOLIST'
@@ -26,7 +26,13 @@ export type ActionType =
     | ADDTodolistActionType
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
-export const todolistsReducer = (state: Array<TodolistType>, action: ActionType): Array<TodolistType> => {
+export let todolistId1 = v1()
+export let todolistId2 = v1()
+const initialState:Array<TodolistType> = [
+
+    ]
+
+export const todolistsReducer = (state: Array<TodolistType> = initialState, action: ActionType): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return state.filter(tl => tl.id !== action.id)
@@ -39,21 +45,21 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
             return [todolist, ...state]
         case 'CHANGE-TITLE-TODOLIST':
 
-            return state.map(tl=>tl.id===action.id ? {...tl,title:action.title} : tl)
+            return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         case 'CHANGE-FILTER-TODOLIST':
 
             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
 
 
         default:
-            throw new Error('I don`t understand')
+            return state
     }
 }
 export const removeTodolistAC = (todolistID: string): RemoveTodolistActionType => {
     return {type: 'REMOVE-TODOLIST', id: todolistID}
 }
 export const addTodolistAC = (newTodolistTitle: string): ADDTodolistActionType => {
-    return {type: 'ADD-TODOLIST', title: newTodolistTitle,id:v1()}
+    return {type: 'ADD-TODOLIST', title: newTodolistTitle, id: v1()}
 }
 export const changeTodolistTitleAC = (todolistId2: string, newTodolistTitle: string): ChangeTodolistTitleActionType => {
     return {type: "CHANGE-TITLE-TODOLIST", id: todolistId2, title: newTodolistTitle}

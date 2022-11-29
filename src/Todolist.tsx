@@ -4,6 +4,10 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton, ListItem, Typography} from "@mui/material";
 import {Delete} from "@mui/icons-material";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "./state/store";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {TasksStateType} from "./AppWithRedux";
 
 
 export type TaskType = {
@@ -14,63 +18,72 @@ export type TaskType = {
 
 type PropsType = {
     title: string
-    tasks: Array<TaskType>
-    removeTask: (id: string, todolistId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     filter: FilterValuesType
     id: string
     removeTodolist: (todolistId: string) => void
-    changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
     changeTodolistTitle: (id: string, newTitle: string) => void
 }
 
 export function Todolist(props: PropsType) {
+    const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[props.id])
+    const dispatch = useDispatch()
+
+
     const onAllClickHandler = () => {
-            props.changeFilter("all", props.id)
+        props.changeFilter("all", props.id)
     }
     const onActiveClickHandler = () => {
-            props.changeFilter("active", props.id)
+        props.changeFilter("active", props.id)
     }
     const onCompletedClickHandler = () => {
-            props.changeFilter("completed", props.id)
+        props.changeFilter("completed", props.id)
     }
 
+    let tasksForTodolists = tasks
+    if (props.filter === "active") {
+        tasksForTodolists=tasksForTodolists.filter(t => !t.isDone)
+    }
+    if (props.filter === "completed") {
+        tasksForTodolists=tasksForTodolists.filter(t => t.isDone)
+    }
     const removeTodolist = () => {
         props.removeTodolist(props.id)
     }
     const changeTodolistTitle = (newTitle: string) => {
         props.changeTodolistTitle(props.id, newTitle)
     }
-    const addTask = (title: string) => {
-        props.addTask(title, props.id)
-    }
+
+
     return <div>
-        <Typography fontWeight={"bolder"} fontStyle={"normal"} fontSize={"larger"} color={"secondary"} align={"center"}><EditableSpan  title={props.title} onChange={changeTodolistTitle}/>
+        <Typography fontWeight={"bolder"} fontStyle={"normal"} fontSize={"larger"} color={"secondary"} align={"center"}><EditableSpan
+            title={props.title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist} aria-label={'delete'} size={"small"}><Delete
                 fontSize={"inherit"}/></IconButton>
         </Typography>
-        <AddItemForm addItem={addTask}/>
+        <AddItemForm addItem={(title) => {
+            dispatch(addTaskAC(title, props.id))
+        }}/>
         <ul>
             {
-                props.tasks.map(t => {
+                tasksForTodolists.map(t => {
                     const onRemoveHandler = () => {
-                        props.removeTask(t.id, props.id)
+                        dispatch(removeTaskAC(t.id, props.id))
                     }
                     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
 
-                        props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
+                        dispatch(changeTaskStatusAC(t.id, e.currentTarget.checked, props.id))
                     }
                     const onChangeTitleHandler = (newValue: string) => {
 
-                        props.changeTaskTitle(t.id, newValue, props.id)
+                        dispatch(changeTaskTitleAC(t.id, newValue, props.id))
                     }
-                    return <ListItem style={{padding:'0px ',margin:'-20px -20px -20px -30px'}} key={t.id} className={t.isDone ? 'is-done' : ''}>
+                    return <ListItem style={{padding: '0px ', margin: '-20px -20px -20px -30px'}} key={t.id}
+                                     className={t.isDone ? 'is-done' : ''}>
 
                         <Checkbox checked={t.isDone}
                                   onChange={onChangeStatusHandler}
-                        defaultChecked color={"success"}
+                                  defaultChecked color={"success"}
                         />
                         <EditableSpan title={t.title}
                                       onChange={onChangeTitleHandler}/>
