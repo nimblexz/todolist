@@ -1,7 +1,8 @@
-import {FilterValuesType, TasksStateType, TodolistType} from "../App";
+
 import {v1} from "uuid";
 import {TaskType} from "../Todolist";
 import {ADDTodolistActionType, RemoveTodolistActionType, todolistId1, todolistId2} from "./todolists-reducer";
+import {TasksStateType} from "../AppWithRedux";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'

@@ -1,4 +1,4 @@
-import {TasksStateType} from "../App";
+
 import {
     addTaskAC,
 
@@ -9,6 +9,7 @@ import {
 } from "./tasks-reducer";
 import {v1} from "uuid";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
+import {TasksStateType} from "../AppWithRedux";
 
 test('correct task should be added to correct array', () => {
     const startState: TasksStateType = {
@@ -32,7 +33,7 @@ test('correct task should be added to correct array', () => {
     expect(startState['todolistId2'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(2)
     expect(endState['todolistId2'][1].title).toBe('tea')
-    expect(endState['todolistId2'].every(t => t.id != '2')).toBeTruthy()
+
 
 })
 test('correct task should be added to correct array', () => {
