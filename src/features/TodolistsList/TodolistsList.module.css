@@ -1,0 +1,21 @@
+.todolistsList{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+justify-content: space-around;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+
+
+
+
+}
+.todolists{
+width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.addItem{
+
+}
